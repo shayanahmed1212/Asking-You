@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="lock.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Note for You ❤️</title>
+    <link rel="stylesheet" href="letter_style.css">
+</head>
+<body>
+    <div id="hearts-container"></div>
+
+    <div class="main-wrapper">
+        <div class="letter-card">
+            <h1 class="letter-header">A tiny note for my favorite person 💖</h1>
+            
+            <div class="letter-body">
+                <p id="line1" class="type-text"></p>
+                <p id="line2" class="type-text"></p>
+                <p id="line3" class="type-text"></p>
+                <p id="line4" class="type-text signature"></p>
+            </div>
+
+            <button id="hug-btn" class="next-btn hidden" onclick="goToHug()">Do you want a hug? 🫂</button>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="music2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        
+        const textLines = [
+            "Haya, every time I think of you, I can’t stop smiling.",
+            "Your laugh, your words, your little quirks — everything about you makes me feel so happy.",
+            "I can’t wait for all the silly, fun, and warm moments we’ll share together 💕",
+            "Happy Birthday Sweetheart 💗"
+        ];
+
+        window.onload = () => {
+            document.body.classList.add('fade-in');
+            const musicTime = localStorage.getItem('musicTime');
+            if (musicTime) music.currentTime = parseFloat(musicTime);
+            music.play().catch(() => {});
+
+            // Start typing the first line
+            typeLine(0);
+        };
+
+        function typeLine(index) {
+            if (index >= textLines.length) {
+                // Show the button once typing is finished
+                const btn = document.getElementById('hug-btn');
+                btn.classList.remove('hidden');
+                btn.style.opacity = '1';
+                return;
+            }
+
+            let charIndex = 0;
+            const targetElement = document.getElementById(`line${index + 1}`);
+            const currentText = textLines[index];
+
+            function typeChar() {
+                if (charIndex < currentText.length) {
+                    targetElement.innerHTML += currentText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeChar, 50); // Speed of typing (ms)
+                } else {
+                    // Move to next line after a short pause
+                    setTimeout(() => typeLine(index + 1), 600);
+                }
+            }
+            typeChar();
+        }
+
+        function goToHug() {
+            localStorage.setItem('musicTime', music.currentTime);
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'hug_page.html';
+            }, 800);
+        }
+
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animation = `fall ${Math.random() * 3 + 6}s linear forwards`;
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 9000);
+        }
+        setInterval(createHeart, 600);
+    </script>
+</body>
+</html>

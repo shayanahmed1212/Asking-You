@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="lock.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAY HAYA! ❤️</title>
+    <link rel="stylesheet" href="yes_style.css">
+</head>
+<body onclick="playMusic()">
+    <div id="hearts-container"></div>
+
+    <div class="arrow-pointer">Click here for a surprise! ⬆️💘</div>
+    <button class="mwah-badge" onclick="sendMwah(event)">Press for Mwahs! 💋</button>
+
+    <div class="container">
+        <h1 class="header_text">HEHE I KNEW YOU'D SAY YES 😛💝</h1>
+        <div class="gif_container">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+        </div>
+        <p class="love-message">I LOVE YOU SOOO MUCHHH 😍💗🌷</p>
+        <button class="hug-button" onclick="handleQuizTransition()">Wanna take a little quiz? ✨</button>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="music2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Use regular function keywords to avoid 'undefined' errors
+        function playMusic() {
+            var music = document.getElementById('bg-music');
+            if (music) {
+                music.play().catch(function(e) { console.log("Music blocked"); });
+            }
+        }
+
+        window.onload = function() {
+            document.body.classList.add('fade-in');
+        };
+
+        function handleQuizTransition() {
+            var music = document.getElementById('bg-music');
+            if (music) {
+                localStorage.setItem('musicTime', music.currentTime);
+            }
+            document.body.classList.add('fade-out-dim');
+            setTimeout(function() {
+                window.location.href = 'quiz.html';
+            }, 800);
+        }
+
+        function sendMwah(e) {
+            if (e) e.stopPropagation();
+            playMusic();
+            var mwah = document.createElement('img');
+            var kissImages = ["kiss.png", "kiss2.png"];
+            mwah.src = kissImages[Math.floor(Math.random() * kissImages.length)];
+            mwah.className = 'kiss-mark';
+            
+            var x = Math.random() * (window.innerWidth - 180);
+            var y = Math.random() * (window.innerHeight - 180);
+            var rotation = Math.random() * 50 - 25; 
+
+            mwah.style.left = x + 'px';
+            mwah.style.top = y + 'px';
+            mwah.style.transform = 'rotate(' + rotation + 'deg)';
+            
+            document.body.appendChild(mwah);
+
+            setTimeout(function() {
+                mwah.style.opacity = '0';
+                setTimeout(function() { mwah.remove(); }, 500);
+            }, 1000);
+        }
+
+        function createHeart() {
+            var container = document.getElementById('hearts-container');
+            if (!container) return;
+            var heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animation = 'fall ' + (Math.random() * 2 + 3) + 's linear forwards';
+            container.appendChild(heart);
+            setTimeout(function() { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>

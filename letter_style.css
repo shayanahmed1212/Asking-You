@@ -1,0 +1,94 @@
+/* --- KEEP YOUR PREVIOUS BODY & CARD STYLES --- */
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f9e3e3 0%, #d6eaf8 100%); 
+    font-family: 'Comic Sans MS', 'cursive', sans-serif;
+    overflow-x: hidden;
+}
+
+body.fade-in { opacity: 1; }
+.fade-out { opacity: 0; transition: 0.8s; }
+
+.letter-card {
+    text-align: center;
+    z-index: 10;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 50px 40px;
+    border-radius: 50px 50px 40px 40px;
+    backdrop-filter: blur(8px);
+    border: 5px solid #fff;
+    box-shadow: 0 10px 30px rgba(255, 107, 173, 0.3);
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- TYPEWRITER TEXT STYLES --- */
+.letter-header {
+    font-size: 2.2em;
+    color: #ff6bad;
+    text-shadow: 2px 2px 0px #fff;
+    margin-bottom: 30px;
+}
+
+.type-text {
+    font-size: 1.25em;
+    color: #2e86c1;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: left;
+    min-height: 1.2em; /* Prevents card jumping while typing */
+}
+
+.signature {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* --- BUTTON ANIMATION --- */
+.next-btn {
+    padding: 15px 40px;
+    font-size: 1.2em;
+    background-color: #ff6bad;
+    color: white;
+    border: 3px solid #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: opacity 1s ease, transform 0.2s;
+    animation: buttonGlow 2s infinite ease-in-out;
+}
+
+.next-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes buttonGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(255, 107, 173, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(255, 107, 173, 0.8); }
+}
+
+/* --- HEARTS --- */
+.heart {
+    position: fixed;
+    top: -10px;
+    font-size: 25px;
+    z-index: 1;
+    color: #ff6bad;
+    opacity: 0.5;
+    animation: fall linear forwards;
+}
+
+@keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }

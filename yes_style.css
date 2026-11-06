@@ -1,0 +1,84 @@
+/* --- TRANSITION LOGIC --- */
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    /* Your original styles below */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f9e3e3 0%, #d6eaf8 100%); 
+    font-family: 'Comic Sans MS', 'cursive', sans-serif;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+body.fade-in { opacity: 1; }
+.fade-out { opacity: 0 !important; }
+
+/* --- REST OF YOUR STYLES --- */
+.container {
+    text-align: center;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    border-radius: 40px;
+    backdrop-filter: blur(8px);
+    border: 5px solid #fff;
+    box-shadow: 0 10px 30px rgba(255, 107, 173, 0.3);
+}
+
+.header_text {
+    font-size: 3.5em;
+    color: #ff6bad; 
+    text-shadow: 3px 3px 0px #fff;
+    margin-bottom: 20px;
+}
+
+.gif_container img {
+    width: 100%; max-width: 400px; height: auto; 
+    border-radius: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.love-message {
+    font-size: 1.5em; color: #2e86c1; 
+    margin-top: 20px; font-weight: bold;
+}
+
+.heart {
+    position: fixed; top: -10px; font-size: 25px;
+    z-index: 1; animation: fall linear forwards;
+}
+
+@keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+.hug-button {
+    margin-top: 25px; padding: 15px 30px; font-size: 1.2em;
+    background-color: #ff6bad; color: white; border: 3px solid #fff;
+    border-radius: 50px; cursor: pointer; transition: transform 0.2s;
+}
+
+.mwah-badge {
+    position: fixed; top: 20px; left: 20px; z-index: 1000;
+    padding: 12px 24px; background: #ff4d94; color: white;
+    border: 3px solid #fff; border-radius: 50px; cursor: pointer;
+    animation: buttonGlow 2s infinite ease-in-out;
+}
+
+.arrow-pointer {
+    position: fixed; font-size: 2em; top: 75px; left: 20px; z-index: 1001;
+    color: #ff4d94; font-weight: bold; animation: bop 1s ease-in-out infinite;
+}   
+
+@keyframes bop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes buttonGlow { 0%, 100% { box-shadow: 0 4px 15px rgba(255, 77, 148, 0.4); } 50% { box-shadow: 0 4px 25px rgba(255, 77, 148, 0.8); } }
+
+.kiss-mark {
+    position: fixed; width: 180px; z-index: 999; pointer-events: none;
+    animation: smackPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes smackPop { 0% { transform: scale(3) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }

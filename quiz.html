@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="lock.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Quiz ✨</title>
+    <link rel="stylesheet" href="quiz_style.css">
+</head>
+<body>
+    <div id="hearts-container"></div>
+
+    <div class="main-wrapper">
+        <div class="quiz-card" id="card">
+            <p class="quiz-title">Quick tiny quiz before we continue hehe 💗</p>
+            <h1 id="question-text">Loading...</h1>
+            <div id="options-container"></div>
+            
+            <div id="quiz-note-area" class="special-note hidden"></div>
+
+            <div id="feedback-area" class="hidden feedback-animation">
+                <p id="feedback-text"></p>
+                <div id="special-note-final" class="special-note hidden">Correct answer detected 😭</div>
+                <button class="next-btn" onclick="nextQuestion()">Next ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="music2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        var music = document.getElementById('bg-music');
+        var currentStep = 0;
+
+        var questions = [
+            {
+                q: "What are my favorite colors?",
+                options: ["Black n White", "Lavander", "Cherry Red"],
+                feedback: "THATS CORRECT YAYYYYY :3"
+            },
+            {
+                q: "Whos the most beautiful girl ever?",
+                options: ["Miss. Haya", "Shayan's Wife", "Mellows mother"],
+                note: "( No wrong answers hehe :3 )",
+                feedback: "BAHAHAH OFCOURSE SHE IS"
+            },
+            {
+                q: "Whats your favorite thing to call me?",
+                options: ["Husband", "Bara bhai", "Good Boy"],
+                feedback: function(choice) { 
+                    return choice === "Bara bhai" ? "I KNEW IT CUTIE PATOOTIE LMFAO ;)" : "YAYYYYY HEHEHE"; 
+                }
+            }
+        ];
+
+        function initQuiz() {
+            document.body.classList.add('fade-in');
+            var musicTime = localStorage.getItem('musicTime');
+            if (musicTime && music) music.currentTime = parseFloat(musicTime);
+            if (music) music.play().catch(function() { console.log("Interaction needed"); });
+            
+            setInterval(function() { 
+                if (music) localStorage.setItem('musicTime', music.currentTime); 
+            }, 1000);
+            showQuestion();
+        }
+
+        function showQuestion() {
+            var step = questions[currentStep];
+            var card = document.getElementById('card');
+            card.style.opacity = '0';
+            
+            setTimeout(function() {
+                document.getElementById('question-text').innerText = step.q;
+                var optionsDiv = document.getElementById('options-container');
+                var noteArea = document.getElementById('quiz-note-area');
+                optionsDiv.innerHTML = '';
+                
+                // Show the "No wrong answers" note only for Q2
+                if(step.note) {
+                    noteArea.innerText = step.note;
+                    noteArea.classList.remove('hidden');
+                } else {
+                    noteArea.classList.add('hidden');
+                }
+
+                var feedbackArea = document.getElementById('feedback-area');
+                feedbackArea.classList.add('hidden');
+                feedbackArea.style.opacity = '0';
+                document.getElementById('special-note-final').classList.add('hidden');
+
+                var delay = currentStep === 2 ? 600 : 0;
+
+                setTimeout(function() {
+                    step.options.forEach(function(opt, index) {
+                        var btn = document.createElement('button');
+                        btn.className = 'quiz-opt';
+                        btn.innerText = opt;
+                        btn.onclick = function() { handleChoice(opt, btn); };
+                        optionsDiv.appendChild(btn);
+                    });
+                    card.style.opacity = '1';
+                }, delay);
+
+            }, 400);
+        }
+
+        function handleChoice(choice, btnElement) {
+            var step = questions[currentStep];
+            var feedbackArea = document.getElementById('feedback-area');
+            document.getElementById('quiz-note-area').classList.add('hidden');
+
+            if (currentStep === 2 && choice === "Bara bhai") {
+                document.getElementById('special-note-final').classList.remove('hidden');
+            }
+
+            var feedbackText = typeof step.feedback === 'function' ? step.feedback(choice) : step.feedback;
+            document.getElementById('options-container').innerHTML = ''; 
+            document.getElementById('feedback-text').innerText = feedbackText;
+            
+            feedbackArea.classList.remove('hidden');
+            setTimeout(function() { feedbackArea.style.opacity = '1'; }, 50);
+            
+            if(currentStep === questions.length - 1) {
+                document.querySelector('.next-btn').innerText = "I wrote something for you ❤️";
+            }
+        }
+
+        function nextQuestion() {
+            currentStep++;
+            if(currentStep < questions.length) {
+                showQuestion();
+            } else {
+                document.body.classList.add('fade-out');
+                setTimeout(function() { window.location.href = "letter.html"; }, 800);
+            }
+        }
+
+        function createHeart() {
+            var container = document.getElementById('hearts-container');
+            if (!container) return;
+            var heart = document.createElement('div');
+            heart.classList.add('ambient-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animation = 'fall ' + (Math.random() * 3 + 6) + 's linear forwards';
+            container.appendChild(heart);
+            setTimeout(function() { heart.remove(); }, 9000);
+        }
+
+        window.onload = initQuiz;
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>

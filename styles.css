@@ -1,0 +1,77 @@
+/* --- TRANSITION LOGIC --- */
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    /* Your original styles below */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f9e3e3 0%, #d6eaf8 100%);
+    font-family: 'Comic Sans MS', 'cursive', sans-serif;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+body.fade-in {
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
+
+/* --- REST OF YOUR STYLES --- */
+.container {
+    text-align: center;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 30px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+    border: 4px solid #fff;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #ff6bad;
+    text-shadow: 2px 2px #fff;
+}
+
+.yes-button {
+    font-size: 1.5em;
+    padding: 15px 30px;
+    margin: 10px;
+    background-color: #aed6f1;
+    color: #2e86c1;
+    border: 3px solid #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s, font-size 0.2s; /* Added font-size transition for growth */
+}
+
+.no-button {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: #ffb3d9;
+    color: #c71585;
+    border: 3px solid #fff;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.heart {
+    position: fixed;
+    top: -10px;
+    color: #ff6bad;
+    font-size: 20px;
+    user-select: none;
+    z-index: 1;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(105vh); }
+}

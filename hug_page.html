@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="lock.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hug Tank 🫂</title>
+    <link rel="stylesheet" href="hug_style.css">
+</head>
+<body>
+    <div id="hearts-container"></div>
+
+    <div class="main-wrapper">
+        <div class="hug-card">
+            <h1 class="hug-header">Haya's Hug Tank</h1>
+            <p class="instruction-text">Hold the heart to pour the hugs! ⬇️</p>
+            
+            <div id="tank" class="hug-tank">
+                </div>
+
+            <div class="counter-display">
+                <span id="hug-count">0</span> Hugs Received
+            </div>
+
+            <div class="button-group">
+                <button class="hug-btn" 
+                        onmousedown="startPouring()" onmouseup="stopPouring()" 
+                        onmouseleave="stopPouring()" ontouchstart="startPouring()" 
+                        ontouchend="stopPouring()">
+                    HOLD FOR HUGS! ❤️
+                </button>
+                
+                <button class="tight-hug-btn" onclick="tightHug()">
+                    Press for tighter hug! 🤗
+                </button>
+            </div>
+
+            <p class="final-note">I love you forever and always, Haya. 🌷</p>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="music2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        let pourInterval;
+        let hugCount = 0;
+
+        window.onload = () => {
+            document.body.classList.add('fade-in');
+            const musicTime = localStorage.getItem('musicTime');
+            if (musicTime) music.currentTime = parseFloat(musicTime);
+            music.play().catch(e => console.log("Music needs interaction"));
+        };
+
+        function startPouring() {
+            addHug();
+            pourInterval = setInterval(addHug, 150); 
+        }
+
+        function stopPouring() { clearInterval(pourInterval); }
+
+        function addHug() {
+            const tank = document.getElementById('tank');
+            const hug = document.createElement('div');
+            
+            // Removed text, kept only cute icons
+            const items = ['🫂', '🫂', '💗', '💝'];    
+            const chosen = items[Math.floor(Math.random() * items.length)];
+            
+            // Increment counter ONLY if it's the hug emoji
+            if (chosen === '🫂') {
+                hugCount++;
+                document.getElementById('hug-count').innerText = hugCount;
+            }
+
+            hug.innerHTML = chosen;
+            hug.className = 'hug-emoji';
+            
+            const x = Math.random() * (tank.clientWidth - 40);
+            const y = Math.random() * (tank.clientHeight - 40);
+            hug.style.left = x + 'px';
+            hug.style.top = y + 'px';
+
+            tank.appendChild(hug);
+
+            // Cleanup
+            setTimeout(() => {
+                hug.style.opacity = '0';
+                hug.style.transform = 'scale(0.5) translateY(20px)';
+                setTimeout(() => {
+                    if (hug.parentNode === tank) tank.removeChild(hug);
+                }, 500); 
+            }, 3000); 
+        }
+
+        function tightHug() {
+            const img = document.createElement('img');
+            img.src = "tight_hug.png"; 
+            img.className = 'tight-hug-mark';
+            
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 200);
+            
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+            
+            document.body.appendChild(img);
+
+            setTimeout(() => {
+                img.style.opacity = '0';
+                img.style.transform = 'scale(1.2) rotate(5deg)';
+                setTimeout(() => { img.remove(); }, 1000);
+            }, 1000);
+        }
+
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animation = `fall ${Math.random() * 3 + 6}s linear forwards`;
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 9000);
+        }
+        setInterval(createHeart, 600);
+    </script>
+</body>
+</html>

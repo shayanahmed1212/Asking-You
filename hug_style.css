@@ -1,0 +1,134 @@
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f9e3e3 0%, #d6eaf8 100%); 
+    font-family: 'Comic Sans MS', 'cursive', sans-serif;
+    overflow: hidden;
+}
+
+body.fade-in { opacity: 1; }
+
+.hug-card {
+    text-align: center;
+    z-index: 10;
+    width: 90%;
+    max-width: 520px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 35px;
+    border-radius: 45px;
+    backdrop-filter: blur(10px);
+    border: 5px solid #fff;
+    box-shadow: 0 10px 30px rgba(255, 107, 173, 0.3);
+}
+
+.hug-header { color: #ff6bad; font-size: 2em; margin-bottom: 10px; text-shadow: 2px 2px 0px #fff; }
+.instruction-text { color: #2e86c1; font-weight: bold; margin-bottom: 20px; }
+
+.hug-tank {
+    width: 100%;
+    height: 220px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    position: relative;
+    margin-bottom: 25px;
+    overflow: hidden;
+    border: 3px dashed #ff6bad;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.hug-btn, .tight-hug-btn {
+    padding: 12px 30px;
+    font-size: 1.1em;
+    color: white;
+    border: 3px solid #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: 80%;
+}
+
+.hug-btn {
+    background-color: #ff6bad;
+    box-shadow: 0 4px 15px rgba(255, 107, 173, 0.4);
+}
+
+.tight-hug-btn {
+    background-color: #ff4d94;
+    box-shadow: 0 4px 15px rgba(255, 77, 148, 0.4);
+}
+
+.hug-btn:active, .tight-hug-btn:active { transform: scale(0.95); }
+
+.final-note { margin-top: 25px; color: #ff6bad; font-weight: bold; font-size: 1.1em; }
+
+.hug-emoji {
+    position: absolute;
+    font-size: 25px;
+    transition: opacity 0.5s, transform 0.5s;
+    pointer-events: none;
+}
+
+.tight-hug-mark {
+    position: fixed;
+    width: 200px; /* Adjust based on your image size */
+    z-index: 100;
+    pointer-events: none;
+    transition: opacity 1s, transform 1s;
+    animation: smackPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes smackPop { 
+    0% { transform: scale(0.5) rotate(-20deg); opacity: 0; } 
+    100% { transform: scale(1) rotate(0deg); opacity: 1; } 
+}
+
+.heart {
+    position: fixed; top: -10px; font-size: 25px;
+    z-index: 1; color: #ff6bad; opacity: 0.5;
+    animation: fall linear forwards;
+}
+
+@keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+
+/* ... All previous styles stay the same ... */
+
+.counter-display {
+    font-size: 1.5em;
+    color: #2e86c1;
+    font-weight: bold;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+#hug-count {
+    color: #ff6bad;
+    font-size: 1.2em;
+}
+
+/* Ensure the tank is slightly higher to fit the counter */
+.hug-tank {
+    width: 100%;
+    height: 180px; /* Shrunk slightly for the counter */
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    position: relative;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border: 3px dashed #ff6bad;
+}
+
+/* ... Rest of your styles (buttons, hearts, smackPop) ... */
